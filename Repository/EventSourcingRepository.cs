@@ -19,7 +19,7 @@ namespace EventSourcingWithEventStore.Repository
         public async Task<IEnumerable<StoredEvent>> ObterEventos(Guid aggregateId)
         {
             var eventos = _eventStoreService.GetClient().ReadStreamAsync(
-                Direction.Backwards,
+                Direction.Forwards,
                 aggregateId.ToString(),
                 StreamPosition.Start,
                 500);
