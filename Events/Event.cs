@@ -1,12 +1,12 @@
-﻿namespace EventSourcingWithEventStore
+﻿namespace EventSourcingWithEventStore.Events
 {
-    public abstract class Event
+    public class Event
     {
         public string MessageType { get; private set; }
         public Guid AggregateId { get; protected set; }
         public DateTime Timestamp { get; private set; }
 
-        protected Event()
+        public Event()
         {
             Timestamp = DateTime.Now;
             MessageType = GetType().Name;

@@ -1,12 +1,7 @@
 ﻿using EventStore.Client;
 
-namespace EventSourcingWithEventStore
+namespace EventSourcingWithEventStore.Services
 {
-    public interface IEventStoreService
-    {
-        EventStoreClient GetClient();
-    }
-
     public class EventStoreService : IEventStoreService
     {
         private readonly EventStoreClientSettings _eventStoreClientSettings;

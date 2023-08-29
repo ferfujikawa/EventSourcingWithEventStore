@@ -1,8 +1,11 @@
-﻿using EventStore.Client;
+﻿using EventSourcingWithEventStore.Entities;
+using EventSourcingWithEventStore.Events;
+using EventSourcingWithEventStore.Services;
+using EventStore.Client;
 using System.Text;
 using System.Text.Json;
 
-namespace EventSourcingWithEventStore
+namespace EventSourcingWithEventStore.Repository
 {
     public class EventSourcingRepository : IEventSourcingRepository
     {
@@ -27,17 +30,18 @@ namespace EventSourcingWithEventStore
             {
                 var dataEncoded = Encoding.UTF8.GetString(@resolvedEvent.Event.Data.ToArray());
 
-                Console.WriteLine(dataEncoded);
-                // TODO: Está com erro para deserializar o objeto
-                //var jsonData = JsonSerializer.Deserialize<Event>(dataEncoded);
+                var jsonData = JsonSerializer.Deserialize<Event>(dataEncoded);
 
-                //var evento = new StoredEvent(
-                //    resolvedEvent.Event.EventId.ToGuid(),
-                //    resolvedEvent.Event.EventType,
-                //    jsonData.Timestamp,
-                //    dataEncoded);
+                if (jsonData != null)
+                {
+                    var evento = new StoredEvent(
+                    resolvedEvent.Event.EventId.ToGuid(),
+                    resolvedEvent.Event.EventType,
+                    jsonData.Timestamp,
+                    dataEncoded);
 
-                //listaEventos.Add(evento);
+                    listaEventos.Add(evento);
+                }
             }
 
             return listaEventos.OrderBy(e => e.DataOcorrencia);
@@ -51,7 +55,7 @@ namespace EventSourcingWithEventStore
                 FormatarEvento(evento));
         }
 
-        private static IEnumerable<EventData> FormatarEvento<TEvent>(TEvent evento) where TEvent: Event
+        private static IEnumerable<EventData> FormatarEvento<TEvent>(TEvent evento) where TEvent : Event
         {
             yield return new EventData(
                 Uuid.NewUuid(),

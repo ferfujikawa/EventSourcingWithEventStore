@@ -1,4 +1,4 @@
-﻿namespace EventSourcingWithEventStore
+﻿namespace EventSourcingWithEventStore.Entities
 {
     public class StoredEvent
     {

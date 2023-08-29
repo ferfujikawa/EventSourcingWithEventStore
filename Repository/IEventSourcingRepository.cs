@@ -1,4 +1,7 @@
-﻿namespace EventSourcingWithEventStore
+﻿using EventSourcingWithEventStore.Entities;
+using EventSourcingWithEventStore.Events;
+
+namespace EventSourcingWithEventStore.Repository
 {
     public interface IEventSourcingRepository
     {
